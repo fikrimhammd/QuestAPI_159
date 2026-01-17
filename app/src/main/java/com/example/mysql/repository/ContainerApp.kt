@@ -1,4 +1,4 @@
-package com.example.mysql.repository
+package com.example.mysql.repositori
 
 import android.app.Application
 import com.example.mysql.apiservice.ServiceApiSiswa
@@ -13,12 +13,13 @@ interface ContainerApp {
     val repositoryDataSiswa: RepositoryDataSiswa
 }
 
-class DefaultContainerApp: ContainerApp {
+class DefaultContainerApp : ContainerApp {
     private val baseurl = "http://10.0.2.2/umyTI/"
 
     val logging = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
+
     val klien = OkHttpClient.Builder()
         .addInterceptor(logging)
         .build()
@@ -26,7 +27,7 @@ class DefaultContainerApp: ContainerApp {
     private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl(baseurl)
         .addConverterFactory(
-            Json{
+            Json {
                 ignoreUnknownKeys = true
                 prettyPrint = true
                 isLenient = true
@@ -40,7 +41,7 @@ class DefaultContainerApp: ContainerApp {
     }
 
     override val repositoryDataSiswa: RepositoryDataSiswa by lazy {
-        jaringanRepositoryDataSiswa(retrofitService)
+        JaringanRepositoryDataSiswa(retrofitService)
     }
 }
 

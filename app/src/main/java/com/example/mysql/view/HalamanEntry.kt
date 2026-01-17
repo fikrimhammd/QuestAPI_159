@@ -1,20 +1,10 @@
 package com.example.mysql.view
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -26,11 +16,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mysql.R
 import com.example.mysql.modeldata.DetailSiswa
 import com.example.mysql.modeldata.UIStateSiswa
-import com.example.mysql.uicontroller.route.DestinasiEntry
 import com.example.mysql.viewmodel.EntryViewModel
 import com.example.mysql.viewmodel.provider.PenyediaViewModel
 import kotlinx.coroutines.launch
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,14 +34,13 @@ fun EntrySiswaScreen(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             SiswaTopAppBar(
-                title = stringResource(DestinasiEntry.titleRes),
+                title = stringResource(R.string.entry_siswa),
                 canNavigateBack = true,
                 navigateUp = navigateBack,
                 scrollBehavior = scrollBehavior
             )
         }
     ) { innerPadding ->
-
         EntrySiswaBody(
             uiStateSiswa = viewModel.uiStateSiswa,
             onSiswaValueChange = viewModel::updateUiState,
@@ -79,12 +66,8 @@ fun EntrySiswaBody(
     modifier: Modifier = Modifier
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(
-            dimensionResource(id = R.dimen.padding_large)
-        ),
-        modifier = modifier.padding(
-            dimensionResource(id = R.dimen.padding_medium)
-        )
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_large)),
+        modifier = modifier.padding(dimensionResource(id = R.dimen.padding_medium))
     ) {
         FormTambahSiswa(
             detailSiswa = uiStateSiswa.detailSiswa,
@@ -102,8 +85,6 @@ fun EntrySiswaBody(
     }
 }
 
-
-
 @Composable
 fun FormTambahSiswa(
     detailSiswa: DetailSiswa,
@@ -113,9 +94,7 @@ fun FormTambahSiswa(
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(
-            dimensionResource(id = R.dimen.padding_medium)
-        )
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_medium))
     ) {
         OutlinedTextField(
             value = detailSiswa.nama,
@@ -125,7 +104,6 @@ fun FormTambahSiswa(
             enabled = enabled,
             singleLine = true
         )
-
         OutlinedTextField(
             value = detailSiswa.alamat,
             onValueChange = { onValueChange(detailSiswa.copy(alamat = it)) },
@@ -134,31 +112,24 @@ fun FormTambahSiswa(
             enabled = enabled,
             singleLine = true
         )
-
         OutlinedTextField(
             value = detailSiswa.telpon,
             onValueChange = { onValueChange(detailSiswa.copy(telpon = it)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            label = { Text(text = stringResource(R.string.telpon)) },
+            label = { Text(stringResource(R.string.telpon)) },
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
             singleLine = true
         )
-
         if (enabled) {
             Text(
                 text = stringResource(R.string.required_field),
-                modifier = Modifier.padding(
-                    start = dimensionResource(id = R.dimen.padding_medium)
-                )
+                modifier = Modifier.padding(start = dimensionResource(id = R.dimen.padding_medium))
             )
         }
-
         Divider(
             thickness = dimensionResource(R.dimen.padding_small),
-            modifier = Modifier.padding(
-                bottom = dimensionResource(id = R.dimen.padding_medium)
-            )
+            modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium))
         )
     }
 }
